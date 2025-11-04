@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shane Munro - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2C5F7C;
+            --secondary: #4A90A4;
+            --accent: #7EC8E3;
+            --light: #F0F7FA;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-medium: #4A4A4A;
+            --text-light: #6B6B6B;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-medium);
+            transition: color 0.3s;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Home Intro Section */
+        .home-intro {
+            background-color: var(--white);
+            padding: 4rem 2rem;
+        }
+
+        .intro-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .intro-content h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .intro-content > p {
+            font-size: 1.1rem;
+            color: var(--text-medium);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .quick-link-card {
+            background-color: var(--light);
+            padding: 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .quick-link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent);
+        }
+
+        .quick-link-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Page Content */
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            flex: 1;
+        }
+
+        .page-content h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .page-content h2 {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* About Page */
+        .about-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-medium);
+            margin-bottom: 1rem;
+        }
+
+        .about-text ul {
+            margin-left: 1.5rem;
+            color: var(--text-medium);
+        }
+
+        .about-text li {
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-info-box {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .contact-info-box h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-details a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-details a:hover {
+            color: var(--primary);
+        }
+
+        /* Skills Page */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-category h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: var(--accent);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Timeline Items */
+        .timeline-item {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--secondary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-item h3 {
+            color: var(--secondary);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item .date {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .timeline-item p {
+            color: var(--text-medium);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-item ul {
+            margin-left: 1.5rem;
+            color: var(--text-medium);
+        }
+
+        .timeline-item li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Projects Page */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            color: var(--text-medium);
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        /* Contact Page */
+        .contact-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-medium);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            background-color: var(--white);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-link .icon {
+            font-size: 2.5rem;
+        }
+
+        .contact-link h3 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-link p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: auto;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .page-content {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo" onclick="showPage('home')">SM</div>
+            <ul>
+                <li><a onclick="showPage('home')" class="nav-link" data-page="home">Home</a></li>
+                <li><a onclick="showPage('about')" class="nav-link" data-page="about">About</a></li>
+                <li><a onclick="showPage('skills')" class="nav-link" data-page="skills">Skills</a></li>
+                <li><a onclick="showPage('education')" class="nav-link" data-page="education">Education</a></li>
+                <li><a onclick="showPage('experience')" class="nav-link" data-page="experience">Experience</a></li>
+                <li><a onclick="showPage('projects')" class="nav-link" data-page="projects">Projects</a></li>
+                <li><a onclick="showPage('contact')" class="nav-link" data-page="contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <h1>Shane Munro</h1>
+            <p>Computer Science Student | Aspiring Software Engineer</p>
+            <div class="hero-buttons">
+                <a onclick="showPage('about')" class="btn">Learn More About Me</a>
+                <a onclick="showPage('contact')" class="btn">Get In Touch</a>
+                <a href="#" class="btn" onclick="alert('Please add your CV PDF file!'); return false;">Download CV</a>
+            </div>
+        </div>
+
+        <section class="home-intro">
+            <div class="intro-content">
+                <h2>Welcome to My Portfolio</h2>
+                <p>I'm a final-year Computer Science student at Northumbria University, passionate about web development and software engineering. I'm currently seeking graduate Software Engineer opportunities where I can contribute to innovative projects and continue growing as a developer.</p>
+                <div class="quick-links">
+                    <div class="quick-link-card" onclick="showPage('skills')">
+                        <h3>💻 Technical Skills</h3>
+                        <p>Explore my proficiency in JavaScript, React, Python, and more</p>
+                    </div>
+                    <div class="quick-link-card" onclick="showPage('projects')">
+                        <h3>🚀 Projects</h3>
+                        <p>Check out what I've been building</p>
+                    </div>
+                    <div class="quick-link-card" onclick="showPage('experience')">
+                        <h3>💼 Experience</h3>
+                        <p>Learn about my professional background</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page">
+        <section class="page-content about-page">
+            <h1>About Me</h1>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Enthusiastic and motivated final-year Computer Science student at Northumbria University, proficient with modern web technologies like JavaScript, React, and Tailwind CSS, complemented by a strong foundation in Python.</p>
+                    <p>With practical experience applying Agile practices in university projects, I am eager to secure a graduate Software Engineer role where I can contribute to a collaborative team and continue my professional development.</p>
+                    
+                    <h2>Location</h2>
+                    <p>📍 Newcastle, UK</p>
+                    
+                    <h2>Interests</h2>
+                    <ul>
+                        <li><strong>Coding Practice:</strong> Actively developing problem-solving skills with coding challenges on LeetCode and reinforcing fundamentals on freeCodeCamp</li>
+                        <li><strong>Sports:</strong> Currently participating in Intramural Football at University, demonstrating strong teamwork and communication</li>
+                        <li><strong>Charity:</strong> Training for the Great North Run to raise funds and awareness for Diabetes UK</li>
+                    </ul>
+                </div>
+                
+                <div class="contact-info-box">
+                    <h3>Contact Information</h3>
+                    <div class="contact-details">
+                        <a href="mailto:shane.munro4@outlook.com">📧 shane.munro4@outlook.com</a>
+                        <a href="tel:07496512176">📱 07496 512176</a>
+                        <a href="https://www.linkedin.com/in/shane-munro256007352" target="_blank">💼 LinkedIn Profile</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Skills Page -->
+    <div id="skills" class="page">
+        <section class="page-content skills-page">
+            <h1>Technical Skills</h1>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Frameworks & Libraries</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Tailwind CSS</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools & Methodologies</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Version Control</span>
+                        <span class="skill-tag">Agile</span>
+                        <span class="skill-tag">OOP</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Soft Skills</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Problem-solving</span>
+                        <span class="skill-tag">Communication</span>
+                        <span class="skill-tag">Collaboration</span>
+                        <span class="skill-tag">Attention to detail</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Education Page -->
+    <div id="education" class="page">
+        <section class="page-content education-page">
+            <h1>Education & Qualifications</h1>
+            <div class="timeline-item">
+                <h3>Bachelor's Degree in Computer Science</h3>
+                <div class="date">Northumbria University | Expected July 2026</div>
+                <p>Strong foundation in core computer science principles, with focus on software engineering and web development. Developed proficiency in Python, JavaScript (React), HTML, and Agile methodologies within team environments.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Foundation Year Computer Science</h3>
+                <div class="date">University of Sunderland</div>
+                <p>Built a solid foundation of Computer Science principles.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Level 3 Diplomas</h3>
+                <div class="date">Resources NE LTD | 2018</div>
+                <ul>
+                    <li>Level 3 Diploma Systems and Principles</li>
+                    <li>Level 3 Diploma ICT Professional Competence</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Experience Page -->
+    <div id="experience" class="page">
+        <section class="page-content experience-page">
+            <h1>Work Experience</h1>
+            <div class="timeline-item">
+                <h3>Customer Experience Specialist</h3>
+                <div class="date">DFDS | May 2022 - Present</div>
+                <ul>
+                    <li>Resolve complex customer queries via phone, email and live chat for bookings, schedules and services</li>
+                    <li>Investigate and resolve customer issues and complaints, ensuring high levels of satisfaction</li>
+                    <li>Communicate service updates and technical information clearly and patiently to non-technical customer base</li>
+                    <li>Collaborate with operations teams to coordinate special travel assistance for customers with accessibility requirements and resolve logistical challenges</li>
+                    <li>Manage and process customer accounts and bookings using in-house booking CRM software</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Projects Page -->
+    <div id="projects" class="page">
+        <section class="page-content projects-page">
+            <h1>Projects</h1>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Personal Portfolio Website</h3>
+                    <p>A clean, accessible portfolio website showcasing my skills, education, and experience. Built with HTML, CSS, and JavaScript with focus on responsive design and accessibility.</p>
+                    <div class="project-tech">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>LeetCode Challenges</h3>
+                    <p>Actively developing problem-solving skills through coding challenges on LeetCode and reinforcing fundamentals on freeCodeCamp. Focus on algorithms and data structures.</p>
+                    <div class="project-tech">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Algorithms</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Campus Accessibility Map - Final Year Project</h3>
+                    <p>A digital intervention designed to support neurodiverse students with the transition to higher education. The interactive campus map provides real-time information on location occupancy, noise levels, light levels, and nearby quiet areas, helping students make informed decisions about their campus experience and reducing anxiety around navigating university spaces.</p>
+                    <div class="project-tech">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Accessibility</span>
+                        <span class="skill-tag">UX Design</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <section class="page-content contact-page">
+            <h1>Get In Touch</h1>
+            <p class="contact-intro">I'm currently looking for graduate Software Engineer opportunities. Whether you have a question, opportunity, or just want to connect, feel free to reach out!</p>
+            <div class="contact-links">
+                <a href="mailto:shane.munro4@outlook.com" class="contact-link">
+                    <span class="icon">📧</span>
+                    <div>
+                        <h3>Email</h3>
+                        <p>shane.munro4@outlook.com</p>
+                    </div>
+                </a>
+                <a href="tel:07496512176" class="contact-link">
+                    <span class="icon">📱</span>
+                    <div>
+                        <h3>Phone</h3>
+                        <p>07496 512176</p>
+                    </div>
+                </a>
+                <a href="https://www.linkedin.com/in/shane-munro256007352" target="_blank" class="contact-link">
+                    <span class="icon">💼</span>
+                    <div>
+                        <h3>LinkedIn</h3>
+                        <p>Connect with me</p>
+                    </div>
+                </a>
+                <a href="https://github.com/Shaneymu" target="_blank" class="contact-link">
+                    <span class="icon">💻</span>
+                    <div>
+                        <h3>GitHub</h3>
+                        <p>View my code</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Shane Munro. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showPage(pageName) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageName).classList.add('active');
+            
+            // Update active nav link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            document.querySelector(`[data-page="${pageName}"]`).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Set home as active on load
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+        });
+    </script>
+</body>
+</html>
